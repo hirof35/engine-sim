@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Fighter Jet Engine Simulator (MFD)</title>
+  <style>
+    body {
+      background-color: #0b0f12;
+      color: #00ff66;
+      font-family: 'Courier New', Courier, monospace;
+      margin: 0;
+      padding: 20px;
+      user-select: none;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 20px;
+    }
+    .panel {
+      border: 2px solid #00ff66;
+      border-radius: 5px;
+      padding: 15px;
+      background: rgba(0, 255, 102, 0.02);
+      box-shadow: 0 0 15px rgba(0,255,102,0.1);
+    }
+    h2 {
+      margin-top: 0;
+      border-bottom: 1px solid #00ff66;
+      padding-bottom: 5px;
+      font-size: 18px;
+    }
+    .control-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+    input[type=range] {
+      width: 100%;
+      accent-color: #00ff66;
+    }
+    .readout {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: right;
+      text-shadow: 0 0 10px rgba(0,255,102,0.5);
+    }
+    .ab-indicator {
+      background: #220000;
+      border: 2px solid #ff3333;
+      color: #ff3333;
+      text-align: center;
+      padding: 10px;
+      font-weight: bold;
+      font-size: 18px;
+      visibility: hidden;
+      box-shadow: 0 0 10px rgba(255,51,51,0.2);
+    }
+    .ab-active {
+      visibility: visible;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; }
+    }
+    canvas {
+      border: 1px solid #00ff66;
+      background: #05080a;
+    }
+  </style>
+  <script src="./renderer.js"></script>
+</head>
+<body>
+
+  <div style="text-align: center; margin-bottom: 20px;">
+    <h1 style="margin: 0; font-size: 24px; letter-spacing: 2px;">MFD ENG-STATUS IND (F-26)</h1>
+  </div>
+
+  <div class="container">
+    <div class="panel">
+      <h2>CONTROLS</h2>
+      <div class="control-group">
+        <label>THROTTLE (スロットル): <span id="txt-throttle">30</span>%</label>
+        <input type="range" id="input-throttle" min="0" max="100" value="30">
+      </div>
+      <div class="control-group">
+        <label>ALTITUDE (高度): <span id="txt-altitude">0</span> m</label>
+        <input type="range" id="input-altitude" min="0" max="15000" value="0" step="500">
+      </div>
+      <div class="control-group">
+        <label>SPEED (速度): Mach <span id="txt-mach">0.00</span></label>
+        <input type="range" id="input-mach" min="0" max="2.5" value="0" step="0.1">
+      </div>
+
+      <h2>DATA READOUT</h2>
+      <div class="control-group">
+        <label>CORE RPM</label>
+        <div class="readout"><span id="val-rpm">0.0</span> %</div>
+      </div>
+      <div class="control-group">
+        <label>THRUST OUTPUT</label>
+        <div class="readout" style="color: #00ffff;"><span id="val-thrust">0.00</span> kN</div>
+      </div>
+      <div class="control-group">
+        <label>FUEL FLOW</label>
+        <div class="readout"><span id="val-ff">0</span> kg/h</div>
+      </div>
+
+      <div id="ab-lamp" class="ab-indicator">🔥 AFTERBURNER 🔥</div>
+    </div>
+
+    <div class="panel">
+      <h2>GRAPHIC DISPLAY</h2>
+      <canvas id="mfdCanvas" width="520" height="520"></canvas>
+    </div>
+  </div>
+
+  
+  <script>
+    require('./renderer.js');
+  </script>
+</body>
+</html>

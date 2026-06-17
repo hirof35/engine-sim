@@ -1,0 +1,12 @@
+{
+  "name": "fighter-engine-gui",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^X.Y.Z"
+  }
+}
